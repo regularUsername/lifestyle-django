@@ -1,0 +1,37 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+{% block pagetitle %}Websie - Login{% endblock %}
+
+{% block styles %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static '/signin.css' %}">
+{% endblock%}
+
+{% block content %}
+<main class="form-signin">
+<form method="post">
+  {% csrf_token %}
+  {% comment %} <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> {% endcomment %}
+
+    <h1 class="h3 mb-3 fw-normal">Melde dich an</h1>
+
+    <div class="form-floating">
+      <input type="username" name="username" class="form-control" id="floatingInput" placeholder="name@example.com" {%if form.username.value%}value="{{form.username.value}}"{%endif%}>
+      <label for="floatingInput">Email address</label>
+      {% if form.username.errors %}<div class="alert alert-danger mt-2">{{form.username.errors}}</div>{% endif %}
+    </div>
+    <div class="form-floating">
+      <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+      <label for="floatingPassword">Password</label>
+      {% if form.password.errors %}<div class="alert alert-danger">{{form.password.errors}}</div>{% endif %}
+    </div>
+
+    {% if form.non_field_errors %}<div class="alert alert-danger">Benutzername oder Passwort ungültig. Beide Felder berücksichtigen Groß-/Kleinschreibung</div>{% endif %}
+
+    <button class="w-100 btn btn-lg btn-success" type="submit">Einloggen</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+</form>
+</main>
+{% endblock %}

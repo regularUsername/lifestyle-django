@@ -1,0 +1,38 @@
+/* fancy lists */
+ol {
+  list-style: none;
+  counter-reset: mycounter;
+  padding: 0;
+}
+
+ol li {
+  position: relative;
+  margin: 0 0 1.5em 2em;
+  padding: 5px 10px;
+  border-left: thin solid black;
+  line-height: 1.5rem;
+
+
+}
+
+ol li:before {
+  content: counter(mycounter);
+  counter-increment: mycounter;
+  position: absolute;
+  top: 0;
+  left: -1em;
+  width: 1em;
+  text-align: center;
+  font-weight: 700;
+  font-size: 2.6rem
+}
+
+/* fancy lists end */
+
+.kategorie {
+  background-color: darkgrey;
+  border-radius: 5px;
+  padding: 0.2em;
+  bottom: 10px;
+  box-sizing: content-box;
+}

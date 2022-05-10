@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block styles %}
+    {% load static %}
+    <link rel="stylesheet"
+          type="text/css"
+          href="{% static '/rezepte/style.css' %}">
+{% endblock %}
+{% block pagetitle %}Website - Rezept {{ rezept.title }}{% endblock %}
+{% block title %}Rezepte{% endblock %}
+{% block content %}
+<main class="flex-shrink">
+    <div class="mt-3 mx-5 position-relative" id="content">
+        <section class="text-center">
+            <h1>{{ rezept.title }}</h1>
+            {% include "rezepte/favorit_button.html" %}
+            {% if rezept.kategorien.all %}
+                {% for kat in rezept.kategorien.all %}
+                <span class="badge bg-secondary">{{ kat.name }}</span>
+                {% endfor %}
+            {% endif %}
+        </section>
+        <br><br>
+        {{ rezept.content | safe }}
+    </div>
+</main>
+{% endblock %}

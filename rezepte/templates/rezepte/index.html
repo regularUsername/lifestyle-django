@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block pagetitle %}Website - Rezepte{% endblock %}
+{% block title %}Rezepte{% endblock %}
+{% block content %}
+<main class="flex-shrink">
+    <div class="container p-1">
+        <a class="btn btn-{{kat_id|yesno:"secondary,primary"}} btn-sm my-1" href="{% url 'rezepte:index' %}">Alle</a>
+    {% for kat in kategorien.all %}
+        <a class="btn
+        {% if kat.id == kat_id %} btn-primary {% else %} btn-secondary {% endif %}
+        btn-sm my-1" 
+        href="?kat={{ kat.id }}">{{ kat.name }}</a>
+    {% endfor %}
+    </div>
+    <div class="container">
+    {% if rezept_liste %}
+        {% comment %} https://getbootstrap.com/docs/5.1/components/card/ {% endcomment %}
+        <div class="row">
+            {% for rezept in rezept_liste %}
+                <div class="col-sm-6 mb-3">
+                    <div class="card h-100 shadow-sm" style="width: 30;">
+                        <img src="{{ rezept.thumbnail.url }}" class="card-img-top" alt="...">
+                        <span>{{ rezept.thumbnail.image.url }}</span>
+                        <div class="card-body">
+                            {% load static %} 
+                            <button class="btn float-end position-relative p-1">
+                            <img class="img-fluid" width=24 height=24 src="{% static rezept.user_fav|yesno:"heart-fill.svg,heart.svg" %}">
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill  bg-secondary">{{rezept.favorite__count}}</span>
+                            </button>
+                            <h5 class="card-title">{{ rezept.title }}</h5>
+                            {% comment %} das hier nur anzeigen wenn kurzbeschreibung existiert {% endcomment %}
+                            <p class="card-text">{% lorem 20 w %}</p>
+                            <a href="{% url 'rezepte:detail_view' rezept.id %}" class="btn btn-primary stretched-link">Lesen</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        {% include "rezepte/pagination.html" %}
+    {% else %}
+        <h1>keine Rezepte verfügbar.</h1>
+    {% endif %}
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block pagetitle %}Website - Videos{% endblock %}
+{% block title %}Videos{% endblock %}
+{% block content %}
+<main class="flex-shrink">
+    <div class="container">
+        {% if page_obj %}
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for v in page_obj %}
+            <div class="col">
+                <div class="card h-100">
+                    <img src="{{v.thumbnail.url}}" class="card-img-top position-relative" alt="" style="aspect-ratio: 16/9">
+                    <div class="card-img-overlay opacity-75">
+                        <span class="badge bg-secondary card-text position-absolute top-0 end-0 m-3">{{v.duration}}</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{v.title}}</h5>
+                        <a href="{% url 'videos:detail_view' v.id %}" class="stretched-link"></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% include "pagination.html" %}
+        {% endif %}
+
+    </div>
+</main>
+{% endblock content %}

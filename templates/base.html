@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.css' %}">
+
+        {% block styles %}{% endblock %}
+        <title>{%block pagetitle %}Website{% endblock %}</title>
+    </head>
+    <body class="d-flex flex-column h-100">
+        
+        <nav class="navbar navbar-expand-md navbar-dark shadow" style="background-color: #002c6c;">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">LOGO</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        {% comment %} <a class="nav-link active" aria-current="page" href="/">Home</a> {% endcomment %}
+                        <a class="nav-link" href="/">Home</a>
+                        <a class="nav-link disabled">Blog</a>
+                        <a class="nav-link disabled">Kurs</a>
+                        <a class="nav-link" href="/videos">Videos</a>
+                        <a class="nav-link" href="/rezepte">Rezepte</a>
+                        {% if user.is_superuser  %}
+                        <a class="nav-link text-danger fw-bold" href="/admin">Admin</a>
+                        {% endif %}
+                    </div>
+                    <div class="navbar-nav ms-md-auto dropdown">
+                    {% if user.is_authenticated %}
+                    <a class="nav-link dropdown-toggle" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                        Willkommen {{user.username}}!
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="defaultDropdown">
+                        <li><a class="dropdown-item" href="#">Mein Account</a></li>
+                        <li><a class="dropdown-item" href="#">Ausloggen</a></li>
+                    </ul>
+                    {% else %}
+                    <a class="btn btn-outline-success ms-md-auto" href="/accounts/login">Einloggen</a>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        {% comment %} <div class="vr"></div> {% endcomment %}
+        <h1 class="py-3 text-center bg-light fw-light">{% block title %}Website{% endblock %}</h1>
+        {% block content %}
+        {% endblock %}
+        <footer class="footer mt-auto py-3">
+            <div class="container">
+                <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+                    <li class="nav-item"> <a href="/pages/impressum" class="nav-link px-2 text-muted">Impressum</a></li>
+                    <li class="nav-item"> <a href="/pages/agb" class="nav-link px-2 text-muted">AGB</a></li>
+                    <li class="nav-item"> <a href="/pages/privacy" class="nav-link px-2 text-muted">Datenschutz</a></li>
+                    <li class="nav-item"> <a href="/pages/about" class="nav-link px-2 text-muted">Über uns</a></li>
+                </ul>
+                <p class="text-center text-muted"> &copy; 2022 Unternehmen</p>
+            </div>
+        </footer>
+        <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <script>
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
+        </script>
+    </body>
+</html>
